@@ -1,9 +1,15 @@
 <script setup>
 import CustomButton from './components/CustomButton.vue';
+
+function handleClickFromCustom() {
+  console.log("dd");
+}
 </script>
 
 <template>
-  <CustomButton/>
+  <CustomButton
+  label = "click"
+  @click="handleClickFromCustom"/>
 </template>
 
 <style>
