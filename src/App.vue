@@ -58,8 +58,7 @@ async function onLoadExternalData() {
 }
 
 async function updateTodoContentMain(todoId) {
-  console.log(updateTodoContent())
-  todos.value[todoId] = updateTodoContent();
+  todos.value[todoId-1] = updateTodoContent();
 }
 
 </script>
@@ -88,7 +87,6 @@ async function updateTodoContentMain(todoId) {
 body {
   height: 100vh;
   width: 100vw;
-  opacity:;
 }
 
 .todos-app-container {

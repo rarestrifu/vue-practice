@@ -53,7 +53,12 @@ async function updateTodoContent() {
     const response = await fetch('https://dummyjson.com/todos?limit=5');
     const json = await response.json();
     const todos = json.todos;
-    return todos;
+    const todos_request = {
+        id: todos[1].userId,
+        completed: todos[1].completed,
+        title: todos[1].todo
+    }
+    return todos_request;
 }
 
 export { loadData, createNewToDoItem, loadExternalData, addTodoPost, updateTodoContent }
