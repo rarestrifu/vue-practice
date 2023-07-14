@@ -71,12 +71,18 @@ function updateTodoContent() {
 }
 
 .delete-todo-button{
-    background-color: red;
+    background-color: white;
     margin-left: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
 }
 
 .update-todo-button{
     background-color: green;
     margin-left: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
 }
 </style>

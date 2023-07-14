@@ -50,13 +50,14 @@ async function addTodoPost() {
 }
 
 async function updateTodoContent() {
-    const response = await fetch('https://dummyjson.com/todos?limit=5');
+    const response = await fetch('https://dummyjson.com/todos?limit=10');
     const json = await response.json();
     const todos = json.todos;
+    const index = Math.floor(Math.random()*10);
     const todos_request = {
-        id: todos[1].userId,
-        completed: todos[1].completed,
-        title: todos[1].todo
+        id: todos[index].userId,
+        completed: todos[index].completed,
+        title: todos[index].todo
     }
     return todos_request;
 }
