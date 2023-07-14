@@ -8,7 +8,7 @@ const props = defineProps({
 
 const isCompleted = ref(props.completed);
 
-const emits = defineEmits(['toggle-completed', 'delete-button']);
+const emits = defineEmits(['toggle-completed', 'delete-button', 'update-todo-content']);
 
 watch(isCompleted, (newValue) => {
     emits('toggle-completed', newValue, props.id);
@@ -16,6 +16,10 @@ watch(isCompleted, (newValue) => {
 
 function deleteToDo() {
     emits('delete-button', props.id);
+}
+
+function updateTodoContent() {
+    emits('update-todo-content', props.id)
 }
 
 </script>
@@ -34,6 +38,10 @@ function deleteToDo() {
             />
             {{ title }}
         </label>
+        <button
+            class="update-todo-button"
+            @click="updateTodoContent"
+        > Update </button>
         <button
             class="delete-todo-button"
             @click="deleteToDo"
@@ -64,6 +72,11 @@ function deleteToDo() {
 
 .delete-todo-button{
     background-color: red;
+    margin-left: 2px;
+}
+
+.update-todo-button{
+    background-color: green;
     margin-left: auto;
 }
 </style>

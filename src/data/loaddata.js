@@ -31,17 +31,29 @@ function _generateNextId() {
 }
 
 async function addTodoPost() {
+    let randomString = (Math.random() + 1).toString(36).substring(7);
+    let randomBool = () => {
+        const nr = Math.floor(Math.random()*2);
+        return nr === 0;
+    }
     const response =  await fetch('https://dummyjson.com/todos/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            todo: 'Wash themm',
-            completed: false,
-            userId: 5
+            todo: randomString,
+            completed: randomBool(),
+            userId: Math.floor(Math.random()*100)
         })
     });
     const todo = await response.json();
     return todo;
 }
 
-export { loadData, createNewToDoItem, loadExternalData, addTodoPost }
+async function updateTodoContent() {
+    const response = await fetch('https://dummyjson.com/todos?limit=5');
+    const json = await response.json();
+    const todos = json.todos;
+    return todos;
+}
+
+export { loadData, createNewToDoItem, loadExternalData, addTodoPost, updateTodoContent }

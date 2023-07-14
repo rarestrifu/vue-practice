@@ -10,7 +10,6 @@ const emits = defineEmits(['addToDo', 'showCompleted', 'deleteAll']);
 const inputRef = ref("");
 const toDoText = ref("");
 const showCompleted = ref(false);
-const isAddButtonDisabled = computed(() => toDoText.value ? false : true)
 
 function addToDo() {
     const newToDo = {

@@ -2,7 +2,7 @@
 import ToDoList from './components/ToDoList.vue';
 import ControlsContainer from './components/ControlsContainer.vue';
 import {ref, computed} from 'vue';
-import { addTodoPost, loadData, loadExternalData } from './data/loaddata';
+import { addTodoPost, loadData, loadExternalData, updateTodoContent } from './data/loaddata';
 
 const todos = ref(loadData());
 
@@ -27,7 +27,6 @@ async function addToDo(newToDo){
     title: addedTodo.todo,
     completed: addedTodo.completed
   });
-  console.log(addedTodo)
 }
 
 function deleteAll() {
@@ -58,6 +57,11 @@ async function onLoadExternalData() {
   }
 }
 
+async function updateTodoContentMain(todoId) {
+  console.log(updateTodoContent())
+  todos.value[todoId] = updateTodoContent();
+}
+
 </script>
 
 <template>
@@ -69,11 +73,13 @@ async function onLoadExternalData() {
       @deleteAll="deleteAll"
       @show-completed="toggleCompleted"
       @load-external-data="onLoadExternalData"
+      
     />
     <ToDoList 
       :todos="todosFiltered" 
       @update-todo="updateToDo"
       @delete-todo="deleteToDo"
+      @update-todo-button="updateTodoContentMain"
     />
   </div>
 </template>
@@ -82,6 +88,7 @@ async function onLoadExternalData() {
 body {
   height: 100vh;
   width: 100vw;
+  opacity:;
 }
 
 .todos-app-container {

@@ -4,7 +4,7 @@ defineProps({
     todos:Array
 })
 
-const emits = defineEmits(['update-todo', 'delete-todo']);
+const emits = defineEmits(['update-todo', 'delete-todo', 'update-todo-button']);
 
 function updateToDo(newCompletedState, toDoId) {
     emits('update-todo', newCompletedState, toDoId);
@@ -12,6 +12,10 @@ function updateToDo(newCompletedState, toDoId) {
 
 function deleteToDo(todoId) {
     emits('delete-todo', todoId);
+}
+
+function updateTodoContent(todoId) {
+    emits('update-todo-button', todoId);
 }
 
 </script>
@@ -26,6 +30,7 @@ function deleteToDo(todoId) {
             :title="todo.title"
             @toggle-completed="updateToDo"
             @delete-button="deleteToDo"
+            @update-todo-content="updateTodoContent"
         />
     </div>
 </template>
