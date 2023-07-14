@@ -2,36 +2,32 @@
 import ToDoList from './components/ToDoList.vue';
 import ControlsContainer from './components/ControlsContainer.vue';
 import {ref, computed} from 'vue';
+import { addTodoPost, loadData, loadExternalData } from './data/loaddata';
 
-const todos = ref([
-  {
-    id: 1,
-    title: "Buy eggs",
-    completed: true
-  },
-  {
-    id: 2,
-    title: "Buy something",
-    completed: false
-  }
-]);
+const todos = ref(loadData());
 
 const nrOfTodos = computed(() => todos.value.length)
 const isDeleteAllButtonDisabled = computed(() => nrOfTodos.value === 0)
 const showCompleted = ref(false);
 const todosFiltered = computed(() => showCompleted.value ? todos.value.filter((todo) => todo.completed) : todos.value);
-const newToDoList = ref([]);
 
-function addToDo(newToDo){
-  if(nrOfTodos.value===0){
-    newToDo.id = 1;
-    todos.value.push(newToDo);
-  }
-  else {
-    const nextId = todos.value[nrOfTodos.value - 1].id;
-    newToDo.id = nextId+1;
-    todos.value.push(newToDo);
-  }
+async function addToDo(newToDo){
+  // if(nrOfTodos.value===0){
+  //   newToDo.id = 1;
+  //   todos.value.push(newToDo);
+  // }
+  // else {
+  //   const nextId = todos.value[nrOfTodos.value - 1].id;
+  //   newToDo.id = nextId+1;
+  //   todos.value.push(newToDo);
+  // }
+  const addedTodo = await addTodoPost();
+  todos.value.push({
+    id: addedTodo.userId,
+    title: addedTodo.todo,
+    completed: addedTodo.completed
+  });
+  console.log(addedTodo)
 }
 
 function deleteAll() {
@@ -54,6 +50,14 @@ function deleteToDo(todoId) {
   todos.value = todos.value.filter(todo => todo.id !== todoId)
 }
 
+async function onLoadExternalData() {
+  todos.value = [];
+  const newTodos = await loadExternalData();
+  if(newTodos.length>0){
+    todos.value = [...newTodos];
+  }
+}
+
 </script>
 
 <template>
@@ -64,6 +68,7 @@ function deleteToDo(todoId) {
       @addToDo="addToDo"
       @deleteAll="deleteAll"
       @show-completed="toggleCompleted"
+      @load-external-data="onLoadExternalData"
     />
     <ToDoList 
       :todos="todosFiltered" 

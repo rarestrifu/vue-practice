@@ -29,3 +29,19 @@ function _generateNextId() {
     window.nextId = window.nextId ? window.nextId + 1 : 1;
     return window.nextId;
 }
+
+async function addTodoPost() {
+    const response =  await fetch('https://dummyjson.com/todos/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            todo: 'Wash themm',
+            completed: false,
+            userId: 5
+        })
+    });
+    const todo = await response.json();
+    return todo;
+}
+
+export { loadData, createNewToDoItem, loadExternalData, addTodoPost }
