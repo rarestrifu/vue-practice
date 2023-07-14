@@ -60,7 +60,7 @@ function updateTodoContent() {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    background-color: darkblue;
+    background-color: red;
     &.completed {
         background-color: aquamarine;
     }

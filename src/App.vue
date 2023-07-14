@@ -58,7 +58,11 @@ async function onLoadExternalData() {
 }
 
 async function updateTodoContentMain(todoId) {
-  todos.value[todoId-1] = updateTodoContent();
+  updateTodoContent()
+  .then(function(updatedTodo) {
+    const index = todos.value.findIndex(todo => todo.id === todoId);
+    todos.value[index] = updatedTodo;
+  })
 }
 
 </script>
