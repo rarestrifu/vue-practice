@@ -6,18 +6,28 @@ const props = defineProps({
     deleteAllButtonDisabled:Boolean
 })
 
-const emits = defineEmits(['addToDo', 'showCompleted', 'deleteAll']);
+const emits = defineEmits(['addRandomToDo', 'showCompleted', 'deleteAll', 'addToDo']);
 const inputRef = ref("");
 const toDoText = ref("");
 const showCompleted = ref(false);
+
+const isAddButtonDisabled = computed(() => toDoText.value === "")
 
 function addToDo() {
     const newToDo = {
         title: toDoText.value,
         completed: false
     }
-
     emits('addToDo', newToDo);
+}
+
+function addRandomToDo() {
+    const newToDo = {
+        title: toDoText.value,
+        completed: false
+    }
+
+    emits('addRandomToDo', newToDo);
 }
 
 function deleteAll() {
@@ -48,11 +58,18 @@ onMounted(() => {
             @keydown.enter="addToDo"
         />
         <CustomButton
-            id="add-todo-button"
+            id="add-random-todo-button"
             label="Add"
             class="add-button"
             @click="addToDo"
+            :disabled="isAddButtonDisabled"
             
+        />
+        <CustomButton 
+            id="add-to-do"
+            label="Add Random"
+            class="add-random-button"
+            @click="addRandomToDo"
         />
         <CustomButton
             id="delete-all-todos-button"
@@ -87,9 +104,19 @@ onMounted(() => {
     gap: 10px;
 }
 
+.input {
+    border-radius: 5px;
+}
+
 .add-button {
     background-color: brown;
     border-radius: 5px;
+}
+
+.add-random-button {
+    background-color: blue;
+    border-radius: 5px;
+    color: aliceblue;
 }
 
 .delete-all-button {

@@ -39,5 +39,6 @@ function updateTodoContent(todoId) {
 .todo-list-container {
     display: flex;
     flex-direction: column;
+    margin: 10px;
 }
 </style>

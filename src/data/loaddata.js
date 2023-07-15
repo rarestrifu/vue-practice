@@ -56,7 +56,7 @@ async function updateTodoContent() {
     const index = Math.floor(Math.random()*10);
     const todos_request = {
         id: todos[index].userId,
-        completed: todos[index].completed,
+        completed: index % 2 === 0 ? true : false,
         title: todos[index].todo
     }
     return todos_request;

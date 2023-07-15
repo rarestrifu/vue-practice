@@ -11,22 +11,25 @@ const isDeleteAllButtonDisabled = computed(() => nrOfTodos.value === 0)
 const showCompleted = ref(false);
 const todosFiltered = computed(() => showCompleted.value ? todos.value.filter((todo) => todo.completed) : todos.value);
 
-async function addToDo(newToDo){
-  // if(nrOfTodos.value===0){
-  //   newToDo.id = 1;
-  //   todos.value.push(newToDo);
-  // }
-  // else {
-  //   const nextId = todos.value[nrOfTodos.value - 1].id;
-  //   newToDo.id = nextId+1;
-  //   todos.value.push(newToDo);
-  // }
+async function addRandomToDo(newToDo){
   const addedTodo = await addTodoPost();
   todos.value.push({
     id: addedTodo.userId,
     title: addedTodo.todo,
     completed: addedTodo.completed
   });
+}
+
+function addToDo(newToDo) {
+  if(nrOfTodos.value===0){
+    newToDo.id = 1;
+    todos.value.push(newToDo);
+  }
+  else {
+    const nextId = todos.value[nrOfTodos.value - 1].id;
+    newToDo.id = nextId+1;
+    todos.value.push(newToDo);
+  }
 }
 
 function deleteAll() {
@@ -50,18 +53,27 @@ function deleteToDo(todoId) {
 }
 
 async function onLoadExternalData() {
-  todos.value = [];
+  // todos.value = [];
+  // const newTodos = await loadExternalData();
+  // if(newTodos.length>0){
+  //   todos.value = [...newTodos];
+  // }
+
   const newTodos = await loadExternalData();
-  if(newTodos.length>0){
-    todos.value = [...newTodos];
-  }
+  newTodos.forEach(element => {
+    todos.value.push(element);
+  });
 }
 
 async function updateTodoContentMain(todoId) {
   updateTodoContent()
   .then(function(updatedTodo) {
     const index = todos.value.findIndex(todo => todo.id === todoId);
-    todos.value[index] = updatedTodo;
+    todos.value[index] = {
+      id: todoId,
+      completed: updatedTodo.completed,
+      title: updatedTodo.title
+    };
   })
 }
 
@@ -72,6 +84,7 @@ async function updateTodoContentMain(todoId) {
     <h1>ToDoList</h1>
     <ControlsContainer
       :delete-all-button-disabled="isDeleteAllButtonDisabled"
+      @addRandomToDo="addRandomToDo"
       @addToDo="addToDo"
       @deleteAll="deleteAll"
       @show-completed="toggleCompleted"
