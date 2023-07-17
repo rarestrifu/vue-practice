@@ -92,6 +92,7 @@ onMounted(() => {
             class="load-external-data"
             @click="$emit('load-external-data')"
         />
+        <slot></slot>
     </div>
 </template>
 

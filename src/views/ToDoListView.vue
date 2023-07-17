@@ -1,14 +1,13 @@
 <script setup>
-import ToDoList from "./components/ToDoList.vue";
-import ControlsContainer from "./components/ControlsContainer.vue";
+import ToDoList from "@/components/ToDoList.vue";
+import ControlsContainer from "@/components/ControlsContainer.vue";
 import { ref, computed } from "vue";
-import { RouterLink, RouterView } from "vue-router";
 import {
   addTodoPost,
   loadData,
   loadExternalData,
   updateTodoContent,
-} from "./data/loaddata";
+} from "@/data/loaddata";
 
 const todos = ref(loadData());
 
@@ -63,12 +62,6 @@ function deleteToDo(todoId) {
 }
 
 async function onLoadExternalData() {
-  // todos.value = [];
-  // const newTodos = await loadExternalData();
-  // if(newTodos.length>0){
-  //   todos.value = [...newTodos];
-  // }
-
   const newTodos = await loadExternalData();
   newTodos.forEach((element) => {
     todos.value.push(element);
@@ -88,18 +81,6 @@ async function updateTodoContentMain(todoId) {
 </script>
 
 <template>
-  <Suspense>
-    <div style="display: flex; align-items: center; justify-content: center;">
-      <header>
-        <div class="wrapper">
-          <nav class="nav-bar">
-            <RouterLink class="link" to="/">Todo List</RouterLink>
-            <RouterLink class="link" to="/my-todos">My Todos</RouterLink>
-          </nav>
-        </div>
-      </header>
-    </div>
-  </Suspense>
   <div class="todos-app-container">
     <h1>ToDoList</h1>
     <ControlsContainer
@@ -118,17 +99,3 @@ async function updateTodoContentMain(todoId) {
     />
   </div>
 </template>
-
-<style>
-body {
-  height: 100vh;
-  width: 100vw;
-}
-
-.todos-app-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-</style>
